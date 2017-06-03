@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="e5a8046083e54c9b8b9dd7477aec3328" Name="Diagram1">
+        <EntityTypeShape EntityType="DemoDBModel.LOOKUPRole" Width="1.5" PointX="3.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DemoDBModel.SYSUser" Width="1.5" PointX="0.75" PointY="4.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="DemoDBModel.SYSUserProfile" Width="1.5" PointX="3" PointY="4.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DemoDBModel.SYSUserRole" Width="1.5" PointX="6" PointY="4.5" IsExpanded="true" />
+        <AssociationConnector Association="DemoDBModel.FK__SYSUserRo__LOOKU__21B6055D" ManuallyRouted="false" />
+        <AssociationConnector Association="DemoDBModel.FK__SYSUserPr__SYSUs__1BFD2C07" ManuallyRouted="false" />
+        <AssociationConnector Association="DemoDBModel.FK__SYSUserRo__SYSUs__22AA2996" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="DemoDBModel.buku" Width="1.5" PointX="8.375" PointY="5" />
+        <EntityTypeShape EntityType="DemoDBModel.laporan" Width="1.5" PointX="10.625" PointY="1" />
+        <EntityTypeShape EntityType="DemoDBModel.pelanggan" Width="1.5" PointX="8.375" PointY="1.125" />
+        <AssociationConnector Association="DemoDBModel.FK__laporan__id_buku__5AEE82B9" />
+        <AssociationConnector Association="DemoDBModel.FK__laporan__id_pela__59FA5E80" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

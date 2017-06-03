@@ -1,0 +1,136 @@
+﻿@{
+    ViewBag.Title = "DataLaporan";
+    Layout = "~/Views/Shared/_Layout.cshtml"; }
+<h2>DataLaporan</h2>
+<div id="divUserListContainer">
+    @Html.Action("ManageLaporanPartial", "Laporan");
+</div>
+ManageLaporanPartial.cshtml
+@model Asp_mvc_2.Models.ViewModel.LaporanDataView
+<script type="text/javascript">
+$(function () {
+// This will make every element with the class "date-picker" into a DatePicker element
+$('.date-picker').datepicker();
+})
+</script>
+<div>
+    <h1>Daftar Pelanggan</h1>
+    <table class="table table-striped table-condensed table-hover">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>ID Buku</th>
+                <th>ID Pelanggan</th>
+                <th>Keterangan</th>
+                <th>Tgl Pinjam</th>
+                <th>Tgl Kembali</th>
+                <th>Saldo</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var i in Model.LaporanProfile)
+            {
+                <tr>
+                    <td> @Html.DisplayFor(m => i.idLaporan)</td>
+                    <td> @Html.DisplayFor(m => i.idBuku)</td>
+                    <td> @Html.DisplayFor(m => i.idPelanggan)</td>
+                    <td> @Html.DisplayFor(m => i.keterangan)</td>
+                    <td> @Html.DisplayFor(m => i.tglPinjam)</td>
+                    <td> @Html.DisplayFor(m => i.tglKembali)</td>
+                    <td> @Html.DisplayFor(m => i.saldo)</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<div><a href="javascript:void(0)" class="lnkInsert">Insert</a></div>
+<div id="divEdit" style="display:none">
+    <input type="hidden" id="hidID" />
+    <table>
+        <tr>
+            <td>ID Buku</td>
+            <td>
+                @Html.DropDownListFor(o => o.SelectedKamar,
+new SelectList(Model.BukuProfile, "id_buku", "ISBN"),
+"",
+new { id = "ddlBuku", @class = "form-control" })
+            </td>
+        </tr>
+        <tr>
+            <td>No Pelanggan</td>
+            <td>
+                @Html.DropDownListFor(o => o.SelectedPelanggan,
+new SelectList(Model.PelangganProfile, "id_pelanggan", "nama"),
+"",
+new { id = "ddlPelanggan", @class = "form-control" })
+            </td>
+        </tr>
+        <tr>
+            <td>Keterangan</td>
+            <td><input type="text" id="txtKeterangan" class="form-control" /></td>
+        </tr>
+        <tr>
+            <td>Tgl Pinjam</td>
+            <td>
+                @Html.TextBox("YourTextBox", "", new { id = "dpPinjam", @class = "date-picker" })
+            </td>
+        </tr>
+        <tr>
+            <td>Tgl Kembali</td>
+            <td>@Html.TextBox("YourTextBox", "", new { id = "dpKembali", @class = "date-picker" })</td>
+        </tr>
+    </table>
+</div>
+<script type="text/javascript">
+$(function () {
+function InsertLaporan(iBuku, iPelanggan, ket, tPinjam, tKembali) {
+console.log(iBuku + ";" + iPelanggan + ";" +ket + ";" + tPinjam );
+$.ajax({
+type: "POST", url: "@(Url.Action("InsertLaporan", "Laporan"))",
+data: {idKamar:iBuku, idPelanggan:iPelanggan, keterangan:ket, tglPinjam:tPinjam, tglKembali:tKembali},
+success: function (data) {
+$("#divUserListContainer").load("@(Url.Action("ManageLaporanPartial","Laporan", new { status ="insert" }))");
+},
+error: function (error) {
+//to do:
+}
+});
+}
+$("a.lnkInsert").on("click", function () {
+initDialog("Add");
+$(".alert-success").empty();
+var row = $(this).closest('tr');
+console.log("masuk lnkInsert");
+$("#ddlBuku").val('')
+$("#ddlPelanggan").val('')
+$("#txtKeterangan").val('')
+$("#dpPinjam").val('')
+$("#dpKembali").val('')
+$("#divEdit").dialog("open");
+return false;
+});
+var initDialog = function (type) {
+console.log("masuk init dialog");
+var title = type;
+$("#divEdit").dialog({
+autoOpen: false,
+modal: true,
+title: type + ' Laporan',
+width: 360,
+buttons: {
+Save: function () {
+var iBuku = $("#ddlBuku").val();
+var iPelanggan = $("#ddlPelanggan").val();
+var ket = $("#txtKeterangan").val();
+var tPinjam = $("#dpPinjam").val();
+var tKembali = $("#dpKembali").val();
+console.log("save " + iBuku + ";" + iPelanggan + ";" + ket + ";" + tPinjam);
+InsertLaporan(iBuku, iPelanggan, ket, tPinjam, tKembali)
+$(this).dialog("destroy");
+},
+Cancel: function () { $(this).dialog("destroy"); }
+}
+});
+}
+});
+</script> <span class="alert-success">@ViewBag.Message</span>
